@@ -1,2 +1,2 @@
 # unitoto
-a special project for image reading
+a social app for sharing images
