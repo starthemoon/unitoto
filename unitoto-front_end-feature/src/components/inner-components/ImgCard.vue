@@ -1,0 +1,109 @@
+<template>
+  <div>
+    <Card class="imgcard-card" dis-hover>
+      <div class="imgcard-content">
+        <div class="imgcard-userinfo">
+          <Avatar class='imgcard-icon' icon="person" size="large" />
+          <p class='imgcard-name'>{{uploader}}</p>
+        </div>
+        <div class='imgcard-imageroom'>
+          <img class='imgcard-image' v-bind:src='imgSrc' />
+        </div>
+        <div class="imgcard-operate">
+          <div class='imgcard-like'>
+            <Icon type="ios-heart-outline" size=30></Icon>
+            <p class='imgcard-likenum'>{{likeAmount}}</p>
+          </div>
+          <div class='imgcard-comment'>
+            <Icon type="ios-chatbubble-outline" size=30></Icon>
+            <p class='imgcard-commentnum'>{{commentAmount}}</p>
+          </div>
+          <div class='imgcard-hotcomments' v-for='item in comments'>
+            <div class='imgcard-hotcomment'>
+              <a>{{item.author}}</a>
+              <p>: {{item.content}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+  </div>
+</template>
+
+<style>
+.ivu-card-body {
+  padding: 0 !important;
+}
+.imgcard-content {
+  margin: 20px auto;
+  width: 100%;
+}
+.imgcard-imageroom {
+  background-color: #EEEEEE;
+  margin: 3px 5px;
+}
+.imgcard-image {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+.imgcard-name {
+  vertical-align: middle;
+  display: inline;
+  font-size: 20px;
+  padding: 0 5px;
+}
+.imgcard-userinfo {
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.imgcard-operate {
+  margin: 0 10px;
+}
+.imgcard-likenum, .imgcard-commentnum {
+  font-size: 15px;
+  display: inline;
+  vertical-align: text-bottom;
+}
+.imgcard-like, .imgcard-comment {
+  display: inline;
+}
+.imgcard-comment {
+  margin-left: 20px;
+}
+.imgcard-hotcomment * {
+  display: inline;
+}
+.imgcard-hotcomment {
+  margin-top: 3px;
+}
+</style>
+
+<script>
+export default {
+  props: {
+    object: {
+      type: Object,
+      default: null
+    }
+  },
+  data: function () {
+    return {
+      userId: this.$props.object.userId,
+      imgSrc: this.$props.object.imgSrc,
+      uploader: this.$props.object.uploader,
+      likeAmount: this.$props.object.likeAmount,
+      comments: this.$props.object.comments,
+      commentAmount: this.$props.object.commentAmount,
+      words: this.$props.object.photoContext
+    }
+  },
+  methods: {
+    userPage: function () {
+      this.$router.push({name: 'User', query: {userid: this.uploader}})
+    }
+  }
+}
+</script>
+
