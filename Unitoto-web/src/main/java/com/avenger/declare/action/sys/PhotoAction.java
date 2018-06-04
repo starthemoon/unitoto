@@ -24,7 +24,7 @@ import com.avenger.declare.api.sys.service.PhotoService;
 import com.avenger.declare.api.sys.service.UserService;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/homepage")
