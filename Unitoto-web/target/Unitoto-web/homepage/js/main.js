@@ -1,4 +1,8 @@
 $(function(){
+//	var url = location.search;
+//	alert(url);
+//	var userid = url.split("=")[1];
+//	console.log(userid);
 /*------------------------日期----------------------------*/
 	var nowDate = new Date();
 	var eDate = nowDate;

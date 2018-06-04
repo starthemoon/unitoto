@@ -9,7 +9,10 @@ function login() {
                 "userpassword": $('#userPassword').val()
             },
         success: function() {
-            window.location.href = 'homepage/main.jsp';
+        	var temp = {
+        			userid: $('#userID').val()
+        	};
+            window.location.href = 'homepage/main.jsp?userid=' + temp.userid;
         }
     });
 }

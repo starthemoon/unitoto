@@ -4,7 +4,7 @@
 <head>
     <title>Unitoto</title>
     <%@include file="/common/jsp/include.jsp"%>
-    <link rel="icon" href="${path}/common/css/img/ship.ico" type="image/x-icon" />
+    <link rel="icon" href="${path}/common/css/img/U.png" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="${path}/common/css/bootstrap/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="${path}/common/css/bootstrap/bootstrap-table.min.css">
     <script type="text/javascript" src="${path}/common/js/bootstrap-datetimepicker.min.js"></script>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="btn-group btn-group-justified" role="group">
                         <div class="btn-group" role="group">
-                            <button id="register" type="button" class="btn btn-primary">注册</button>
+                            <button type="button" class="btn btn-primary" onclick="register()">注册</button>
                         </div>
                     </div>
                 </form>
@@ -56,5 +56,6 @@
     </div>
     <div class="col-md-2"></div>
 </div>
+<script type="text/javascript" src="${path}/homepage/js/register.js" onload="init()"></script>
 </body>
 </html>
