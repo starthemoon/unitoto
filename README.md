@@ -1,2 +1,2 @@
 # unitoto
-a social app for sharing images
+A social app for sharing images
