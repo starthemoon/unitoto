@@ -20,6 +20,6 @@ public class MainAction {
 	 */
 	@RequestMapping
 	public String execute() throws Exception{
-		return "homepage/login";
+		return "homepage/main";
 	}
 }
