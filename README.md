@@ -1,5 +1,5 @@
 # unitoto
-A social app for sharing images
+a special project for image reading
 
 ## Set up a background development environment
 
