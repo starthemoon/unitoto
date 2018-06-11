@@ -1,4 +1,5 @@
 # unitoto
+A social app for sharing images
 
 ## Set up a background development environment
 
