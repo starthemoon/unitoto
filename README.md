@@ -16,12 +16,12 @@ a special project for image reading
 
 ### Run Start.java
 
-- Input `cd /Users/James/Documents/GitHub/unitoto/Unitoto-service/target/Unitoto-service-0.0.1-SNAPSHOT.jar`
-- Input `java -Djava.ext.dirs=/Users/James/Documents/workspace/Unitoto/Unitoto-service/target/lib -cp Unitoto-service-0.0.1-SNAPSHOT.jar com.avenger.declare.Start`
+- Input `cd /Users/James/Documents/GitHub/unitoto/Unitoto-service/target`
+- Input `java -Djava.ext.dirs=/Users/James/Documents/GitHub/unitoto/Unitoto-service/target/lib -cp Unitoto-service-0.0.1-SNAPSHOT.jar com.avenger.declare.Start`
 
 ### Run Tomcat
 
-- Copy `Unitoto-service-0.0.1-SNAPSHOT.jar` to `/Users/James/Documents/apache-tomcat-8.0.9/webapps`
+- Copy `Unitoto-web.war` to `/Users/James/Documents/apache-tomcat-8.0.9/webapps`
 - Input `cd /Users/James/Documents/apache-tomcat-8.0.9/bin`
 - Input `sudo sh startup.sh`
 
