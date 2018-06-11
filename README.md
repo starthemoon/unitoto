@@ -21,7 +21,7 @@ a special project for image reading
 
 ### Run Tomcat
 
-- Copy `Unitoto-service-0.0.1-SNAPSHOT.jar` to `/Users/James/Documents/apache-tomcat-8.0.9/webapps`
+- Copy `Unitoto-web.war` to `/Users/James/Documents/apache-tomcat-8.0.9/webapps`
 - Input `cd /Users/James/Documents/apache-tomcat-8.0.9/bin`
 - Input `sudo sh startup.sh`
 
