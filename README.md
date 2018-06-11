@@ -17,7 +17,7 @@ a special project for image reading
 ### Run Start.java
 
 - Input `cd /Users/James/Documents/GitHub/unitoto/Unitoto-service/target/Unitoto-service-0.0.1-SNAPSHOT.jar`
-- Input `java -Djava.ext.dirs=/Users/James/Documents/workspace/Unitoto/Unitoto-service/target/lib -cp Unitoto-service-0.0.1-SNAPSHOT.jar com.avenger.declare.Start`
+- Input `java -Djava.ext.dirs=/Users/James/Documents/GitHub/unitoto/Unitoto-service/target/lib -cp Unitoto-service-0.0.1-SNAPSHOT.jar com.avenger.declare.Start`
 
 ### Run Tomcat
 
