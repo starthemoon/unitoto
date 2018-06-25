@@ -4,6 +4,9 @@ import Index from '../components/index'
 import Search from '../components/search'
 import User from '../components/user'
 import Add from '../components/add'
+import Community from '../components/community'
+import Map from '../components/map'
+import Group from '../components/group'
 
 Vue.use(Router)
 
@@ -28,6 +31,21 @@ export default new Router({
       path: '/add',
       name: 'Add',
       component: Add
+    },
+    {
+      path: '/community',
+      name: 'Community',
+      component: Community
+    },
+    {
+      path: '/map',
+      name: 'Map',
+      component: Map
+    },
+    {
+      path: '/group',
+      name: 'Group',
+      component: Group
     }
   ]
 })

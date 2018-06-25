@@ -5,6 +5,10 @@
         <Button @click="confirmSearch" slot="append" icon="ios-search"></Button>
       </Input>
       <DropdownMenu slot="list" class="search-menu">
+        <div class="search-title">
+          <span>User</span>
+          <router-link to="www.baidu.com" class="link">more</router-link>
+        </div>
         <DropdownItem v-for="user in users" :name="user.name" :key="user.name">
           <Avatar :src="user.avatar"></Avatar>
           <span>{{user.name}}</span>
@@ -69,10 +73,61 @@
       return {
         visible: false,
         users: [
-
+          {
+            // send the value inputted by user to server to get the matched user list
+            id: '1',
+            name: 'test1',
+            avatar: 'http://img3.3lian.com/2013/c2/14/d/11.jpg'
+          },
+          {
+            id: '2',
+            name: 'test2',
+            avatar: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg'
+          }
         ],
         recommendRows: [
-
+          [
+            {
+              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
+              alt: ''
+            },
+            {
+              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
+              alt: ''
+            },
+            {
+              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
+              alt: ''
+            },
+          ],
+          [
+            {
+              src: 'http://pic.58pic.com/58pic/14/20/58/95a58PICXQp_1024.jpg',
+              alt: ''
+            },
+            {
+              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
+              alt: ''
+            },
+            {
+              src: 'http://img4.imgtn.bdimg.com/it/u=832634338,2138864592&fm=27&gp=0.jpg',
+              alt: ''
+            },
+          ],
+          [
+            {
+              src: 'http://img5.imgtn.bdimg.com/it/u=806391916,1690025371&fm=11&gp=0.jpg',
+              alt: ''
+            },
+            {
+              src: 'http://img4.imgtn.bdimg.com/it/u=3201723314,3315056898&fm=27&gp=0.jpg',
+              alt: ''
+            },
+            {
+              src: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg',
+              alt: ''
+            },
+          ]
         ],
         value: '',
         if_show_recommend: true,

@@ -25,11 +25,26 @@
             </Row>
           </div>
         </TabPane>
-        <TabPane label="关 注" icon="eye">
+        <TabPane label="社 区" icon="ios-home">
           <Row>
             <Col>
               <Card>
+                <p slot="title">已加入的社区</p>
+                <p>社区1</p>
+                <p>社区2</p>
+                <p>社区3</p>
+              </Card>
+            </Col>
+          </Row>
+        </TabPane>
+        <TabPane label="关 注" icon="eye">
+          <Row>
+            <Col >
+              <Card>
                 <p slot="title">正在关注</p>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
               </Card>
             </Col>
           </Row>
@@ -105,7 +120,6 @@
 
 <script>
 import axios from 'axios'
-
 export default {
   data () {
     return {
@@ -167,4 +181,3 @@ export default {
   }
 }
 </script>
-
