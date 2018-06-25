@@ -1,9 +1,0 @@
-com/avenger/declare/action/sys/MapAction.class
-com/avenger/declare/action/sys/PhotoAction.class
-com/avenger/declare/action/sys/MainAction.class
-com/avenger/declare/action/sys/UserAction.class
-com/avenger/declare/action/sys/IdGeneratorUtil.class
-com/avenger/declare/action/sys/Tool.class
-com/avenger/declare/action/base/BaseAction.class
-com/avenger/declare/action/sys/SearchAction.class
-com/avenger/declare/action/sys/CommunityAction.class
