@@ -5,6 +5,12 @@
         <a v-on:click='jump("main")' class="main-logo"><img src="./assets/logo.png" /></a>
         <Button type="ghost" icon="ios-search" class="main-search" v-on:click='jump("search")'>Search</Button>
         <div class="main-menu">
+          <MenuItem name="map">
+              地图
+          </MenuItem>
+          <MenuItem name="community" v-on:click='jump("community")'>
+              社区
+          </MenuItem>
           <div class="main-userIcon" v-on:click='jump("user")'>
             <Avatar icon="person" />
           </div>
@@ -19,10 +25,10 @@
           <div class='app-login'>
             <Form ref='loginData' :model='loginData' :rules='ruleValidate'>
               <FormItem prop='loginUserid'>
-                <Input type='text' v-model='loginData.loginUserid' placeholder='账号'></Input>
+                <Input type='text' v-model='loginData.loginUserid' placeholder='请输入用户ID'></Input>
               </FormItem>
               <FormItem prop='loginPassword'>
-                <Input type='password' v-model='loginData.loginPassword' placeholder='密码'></Input>
+                <Input type='password' v-model='loginData.loginPassword' placeholder='请输入密码'></Input>
               </FormItem>
               <FormItem>
                 <Button type='primary' @click='login' long>登录</Button>
@@ -33,13 +39,13 @@
         <TabPane label='注册' name='signup'>
           <Form ref='signupData' :model='signupData' :rules='ruleValidate'>
             <FormItem prop='signupUserid'>
-              <Input type='text' v-model='signupData.signupUserid' placeholder='账号'></Input>
+              <Input type='text' v-model='signupData.signupUserid' placeholder='请输入用户ID，日后不可修改'></Input>
             </FormItem>
             <FormItem prop='signupUsername'>
-              <Input type='text' v-model='signupData.signupUsername' placeholder='昵称'></Input>
+              <Input type='text' v-model='signupData.signupUsername' placeholder='请输入用户名'></Input>
             </FormItem>
             <FormItem prop='signupPassword'>
-              <Input type='password' v-model='signupData.signupPassword' placeholder='密码'></Input>
+              <Input type='password' v-model='signupData.signupPassword' placeholder='请输入密码'></Input>
             </FormItem>
             <FormItem prop='signupCpassword'>
               <Input type='password' v-model='signupData.signupCpassword' placeholder='请再次输入密码'></Input>
@@ -58,7 +64,6 @@
 <script>
 import axios from 'axios'
 import qs from 'qs'
-
 export default {
   data: function () {
     var that = this
@@ -173,7 +178,8 @@ export default {
                 that.isLogin = false
                 that.$Message.success('登录成功')
                 that.$router.push('/user')
-              } else {
+              } 
+              else {
                 that.$Message.error('登录失败，请稍后重试')
               }
             })
@@ -181,7 +187,8 @@ export default {
               console.log(err)
               that.$Message.error('登录失败，请稍后重试')
             })
-        } else {
+        } 
+        else {
           this.$Message.error('请先完成表单')
         }
       })
