@@ -1,0 +1,24 @@
+{
+  "name": "unitoto",
+  "version": "1.0.0",
+  "description": "a special project for image reading",
+  "main": "index.js",
+  "dependencies": {
+    "formidable": "^1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starthemoon/unitoto.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/starthemoon/unitoto/issues"
+  },
+  "homepage": "https://github.com/starthemoon/unitoto#readme"
+}
