@@ -15,14 +15,14 @@
       <Tabs value="name1" type='card'>
         <TabPane label="相 册" icon="images">
           <div class="user-recommend" v-show="if_show_recommend">
-            <Row v-for="(row, index_row) in photos" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
+            <!-- <Row v-for="(row, index_row) in photos" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
               <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8"><img :src=col.src :alt="col.alt"></Col>
-            </Row>
-            <!-- <Row v-for='i in Math.ceil(photos.length / 3)' :key='i' class="code-row-bg">
+            </Row> -->
+            <Row v-for='i in Math.ceil(photos.length / 3)' :key='i' class="code-row-bg">
               <Col span='8' v-for='j in 3' :key='j' class="item-img">
                 <img v-if='(i - 1) * 3 + j - 1 < photos.length' :src='photos[(i - 1) * 3 + j - 1]' class='add-showImg' @click='operateImg((i - 1) * 3 + j - 1)' />
               </Col>
-            </Row> -->
+            </Row>
           </div>
         </TabPane>
         <TabPane label="社 区" icon="ios-home">
@@ -123,50 +123,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      photos: [
-          [
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-          ],
-          [
-            {
-              src: 'http://pic.58pic.com/58pic/14/20/58/95a58PICXQp_1024.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img4.imgtn.bdimg.com/it/u=832634338,2138864592&fm=27&gp=0.jpg',
-              alt: ''
-            },
-          ],
-          [
-            {
-              src: 'http://img5.imgtn.bdimg.com/it/u=806391916,1690025371&fm=11&gp=0.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img4.imgtn.bdimg.com/it/u=3201723314,3315056898&fm=27&gp=0.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg',
-              alt: ''
-            },
-          ]
-        ],
+      photos: [],
       value: '',
       if_show_recommend: true,
       user: '',
