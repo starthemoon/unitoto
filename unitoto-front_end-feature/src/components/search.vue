@@ -98,7 +98,7 @@
             {
               src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
               alt: ''
-            }
+            },
           ],
           [
             {
@@ -112,7 +112,7 @@
             {
               src: 'http://img4.imgtn.bdimg.com/it/u=832634338,2138864592&fm=27&gp=0.jpg',
               alt: ''
-            }
+            },
           ],
           [
             {
@@ -126,7 +126,7 @@
             {
               src: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg',
               alt: ''
-            }
+            },
           ]
         ],
         value: '',
