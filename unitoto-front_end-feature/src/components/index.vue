@@ -48,9 +48,7 @@ export default {
   },
   data: function () {
     return {
-      imgArr: [
-
-      ],
+      imgArr: [ ],
       isComplete: true
     }
   },

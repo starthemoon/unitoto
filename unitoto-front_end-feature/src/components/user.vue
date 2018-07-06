@@ -172,7 +172,7 @@ export default {
       }).then(function (res) {
         var path = 'http://45.77.182.195:8080/Unitoto-web/'
         for (var i = 0; i < res.data.length; i++) {
-          that.photos.push(path+res.data[i].photoaddress)
+          that.photos.push(path + res.data[i].photoaddress)
           console.log('!!!')
           console.log(that.photos)
           console.log('!!!')
