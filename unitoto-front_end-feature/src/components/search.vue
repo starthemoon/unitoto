@@ -152,19 +152,19 @@
         this.if_show_recommend = false
       }
     },
-    // created: function () {
-    //   var that = this
-    //   if (this.$store.state.userId === '') {
-    //     this.isLogin = false
-    //     this.$Message.error('您尚未登录，3s后回到主页')
-    //     var c = setInterval(function () {
-    //       that.$router.push('/')
-    //       clearInterval(c)
-    //     }, 3000)
-    //   } else {
-    //     this.isLogin = true
-    //   }
-    // },
+    created: function () {
+      var that = this
+      if (this.$store.state.userId === '') {
+        this.isLogin = false
+        this.$Message.error('您尚未登录，3s后回到主页')
+        var c = setInterval(function () {
+          that.$router.push('/')
+          clearInterval(c)
+        }, 3000)
+      } else {
+        this.isLogin = true
+      }
+    },
     watch: {
       value: function (curVal, oldVal) {
         // this.visible = true
