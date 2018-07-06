@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/service': {
-        target: 'http://localhost:8080/Unitoto-web/homepage',
+        target: 'http://45.77.182.195:8080/Unitoto-web/homepage',
         changeOrigin: true,
         pathRewrite: { 
           '^/service': ''
