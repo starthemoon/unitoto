@@ -34,7 +34,7 @@ public interface PhotoService {
     
     boolean addAlbum(ArrayList<Photo> photos, Multiphoto multiphoto);
     
-    boolean addPhotoLikeNum(String photoId);
+    int addPhotoLikeNum(String photoId);
     
     boolean deletePhoto(String photoId);
     

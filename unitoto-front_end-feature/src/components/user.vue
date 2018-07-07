@@ -1,10 +1,7 @@
 <template>
   <div v-if='isLogin'>
-    <div class="demo-avatar">
-        <Avatar :style="{background: color}">{{ user }}</Avatar>
-    </div>
     <div class="message-font">
-      <p class="user_font">{{user}}</p>
+      <p class="user_font">{{name}}</p>
       <p class="Tel-font">
         <span v-if='tel && tel.length > 0'>Tel：{{tel?tel:''}}</span>
         <span v-if='Email && Email.length > 0'>E-mail: {{Email}}</span>
@@ -25,26 +22,15 @@
             </Row>
           </div>
         </TabPane>
-        <TabPane label="社 区" icon="ios-home">
-          <Row>
-            <Col>
-              <Card>
-                <p slot="title">已加入的社区</p>
-                <p>社区1</p>
-                <p>社区2</p>
-                <p>社区3</p>
-              </Card>
-            </Col>
-          </Row>
-        </TabPane>
         <TabPane label="关 注" icon="eye">
           <Row>
-            <Col >
-              <Card>
-                <p slot="title">正在关注</p>
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
+            <Col>
+              <Card dis-hover>
+                <ul>
+                  <li v-for='item in following' :key='item'>
+                    {{ item }}
+                  </li>
+                </ul>
               </Card>
             </Col>
           </Row>
@@ -124,6 +110,8 @@ export default {
   data () {
     return {
       photos: [],
+      following: [],
+      name: '',
       value: '',
       if_show_recommend: true,
       user: '',
@@ -162,7 +150,22 @@ export default {
         clearInterval(c)
       }, 3000)
     } else {
+      var path = 'http://localhost:8080/Unitoto-web/'
       this.isLogin = true
+
+      axios({
+        url: '/service/getUserInformation.do',
+        method: 'get',
+        params: {
+          userid: that.$store.state.userId
+        }
+      }).then(function (res) {
+        that.name = res.data.userName
+      }).catch(function (err) {
+        that.$Message.error('无法从服务器获取内容，请稍后重试')
+        console.log(err)
+      })
+
       axios({
         url: '/service/getUserPhotos.do',
         method: 'get',
@@ -171,7 +174,22 @@ export default {
         }
       }).then(function (res) {
         for (var i = 0; i < res.data.length; i++) {
-          that.photos.push(res.data[i].photoadress)
+          that.photos.push(path + res.data[i].photoaddress)
+        }
+      }).catch(function (err) {
+        that.$Message.error('无法从服务器获取内容，请稍后重试')
+        console.log(err)
+      })
+
+      axios({
+        url: '/service/getFollowings.do',
+        method: 'get',
+        params: {
+          userid: that.$store.state.userId
+        }
+      }).then(function (res) {
+        for (var i = 0; i < res.data.length; i++) {
+          that.following.push(res.data[i].username)
         }
       }).catch(function (err) {
         that.$Message.error('无法从服务器获取内容，请稍后重试')

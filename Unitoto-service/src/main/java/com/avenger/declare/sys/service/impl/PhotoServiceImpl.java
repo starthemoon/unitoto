@@ -287,17 +287,17 @@ public class PhotoServiceImpl implements PhotoService{
 	    }
 	}
 
-	public boolean addPhotoLikeNum(String photoId) {
+	public int addPhotoLikeNum(String photoId) {
 	    // TODO Auto-generated method stub
 	    Photo photo = photoMapper.getPhotoById(photoId);
 	    if (photo == null) {
-		return false;
+		return 0;
 	    } else {
 		int likeNum = photo.getPhotoLikeNum();
 		likeNum++;
 		photo.setPhotoLikeNum(likeNum);
 		photoMapper.updatePhoto(photo);
-		return true;
+		return likeNum;
 	    }
 	}
 

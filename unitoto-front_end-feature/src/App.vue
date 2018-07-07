@@ -5,12 +5,6 @@
         <a v-on:click='jump("main")' class="main-logo"><img src="./assets/logo.png" /></a>
         <Button type="ghost" icon="ios-search" class="main-search" v-on:click='jump("search")'>Search</Button>
         <div class="main-menu">
-          <MenuItem name="map">
-              地图
-          </MenuItem>
-          <MenuItem name="community" v-on:click='jump("community")'>
-              社区
-          </MenuItem>
           <div class="main-userIcon" v-on:click='jump("user")'>
             <Avatar icon="person" />
           </div>
@@ -178,8 +172,7 @@ export default {
                 that.isLogin = false
                 that.$Message.success('登录成功')
                 that.$router.push('/user')
-              } 
-              else {
+              } else {
                 that.$Message.error('登录失败，请稍后重试')
               }
             })
@@ -187,8 +180,7 @@ export default {
               console.log(err)
               that.$Message.error('登录失败，请稍后重试')
             })
-        } 
-        else {
+        } else {
           this.$Message.error('请先完成表单')
         }
       })

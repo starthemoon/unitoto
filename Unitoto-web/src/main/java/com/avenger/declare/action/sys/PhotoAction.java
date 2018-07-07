@@ -309,6 +309,17 @@ public class PhotoAction extends BaseAction{
 	    return jsonObject;
 	}
 	
+	@RequestMapping("/addPhotoLikeNum")
+	@ResponseBody
+	public int addPhotoLikeNum(HttpServletRequest request) {
+	    String photoId = request.getParameter("photoId");
+	    if (photoId == null) {
+		return 0;
+	    } else {
+		return photoService.addPhotoLikeNum(photoId);
+	    }
+	}
+	
 	@RequestMapping("/addLabel")
 	@ResponseBody
 	public boolean addLabel(HttpServletRequest request) {
