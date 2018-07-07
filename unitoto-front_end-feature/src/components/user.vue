@@ -55,9 +55,9 @@
       </div>
     </div>
 
-    <Modal v-model='isShown' ref='preview'>
+    <!-- <Modal v-model='isShown' ref='preview'>
       <img :src='photos[shownImg]' class='user-opimg'/>
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 
