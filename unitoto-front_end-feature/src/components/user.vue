@@ -1,19 +1,16 @@
 <template>
   <div v-if='isLogin'>
-    <div class="demo-avatar">
-        <Avatar :style="{background: color}">{{ user }}</Avatar>
-    </div>
     <div class="message-font">
-      <p class="user_font">{{user}}</p>
+      <p class="user_font">{{name}}</p>
       <p class="Tel-font">
         <span v-if='tel && tel.length > 0'>Tel：{{tel?tel:''}}</span>
         <span v-if='Email && Email.length > 0'>E-mail: {{Email}}</span>
       </p>
       <p class="show" v-if='show && show.length > 0'>个人简介： {{show}}</p>
     </div>
-    <div class="tab-div">
-      <Tabs @on-click="lookCommunity" on-tab-remove="name2" value="name1" type='card'>
-        <TabPane label="相 册" icon="images" closable>
+    <div class = "tab-div">
+      <Tabs value="name1" type='card'>
+        <TabPane label="相 册" icon="images">
           <div class="user-recommend" v-show="if_show_recommend">
             <!-- <Row v-for="(row, index_row) in photos" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
               <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8"><img :src=col.src :alt="col.alt"></Col>
@@ -25,24 +22,15 @@
             </Row>
           </div>
         </TabPane>
-        <TabPane label="社 区" icon="ios-home" closable>
+        <TabPane label="关 注" icon="eye">
           <Row>
             <Col>
-              <Card>
-                <p slot="title">已加入的社区</p>
-                <p v-for='community in communities'>{{community}}</p>
-              </Card>
-            </Col>
-          </Row>
-        </TabPane>
-        <TabPane label="关 注" icon="eye" closable>
-          <Row>
-            <Col >
-              <Card>
-                <p slot="title">正在关注</p>
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
+              <Card dis-hover>
+                <ul>
+                  <li v-for='item in following' :key='item'>
+                    {{ item }}
+                  </li>
+                </ul>
               </Card>
             </Col>
           </Row>
@@ -53,9 +41,9 @@
       </div>
     </div>
 
-    <!-- <Modal v-model='isShown' ref='preview'>
+    <Modal v-model='isShown' ref='preview'>
       <img :src='photos[shownImg]' class='user-opimg'/>
-    </Modal> -->
+    </Modal>
   </div>
 </template>
 
@@ -122,7 +110,8 @@ export default {
   data () {
     return {
       photos: [],
-      communities: [],
+      following: [],
+      name: '',
       value: '',
       if_show_recommend: true,
       user: '',
@@ -148,25 +137,6 @@ export default {
     operateImg: function (index) {
       this.shownImg = index
       this.isShown = true
-    },
-    lookCommunity: function (res) {
-      var that = this
-      axios({
-        url: '/service/getUserCommunities.do',
-        method: 'get',
-        params: {
-          userid: that.$store.state.userId
-        }
-      }).then(function (res) {
-        console.log('community')
-        console.log(res)
-        for (var i = 0; i < res.data.length; i++) {
-          that.communities.push(res.data[i])
-        }
-      }).catch(function (err) {
-        that.$Message.error('无法从服务器获取内容，请稍后重试')
-        console.log(err)
-      })
     }
   },
   created: function () {
@@ -180,8 +150,22 @@ export default {
         clearInterval(c)
       }, 3000)
     } else {
+      var path = 'http://localhost:8080/Unitoto-web/'
       this.isLogin = true
-      // get photos, community and followings users once created
+
+      axios({
+        url: '/service/getUserInformation.do',
+        method: 'get',
+        params: {
+          userid: that.$store.state.userId
+        }
+      }).then(function (res) {
+        that.name = res.data.userName
+      }).catch(function (err) {
+        that.$Message.error('无法从服务器获取内容，请稍后重试')
+        console.log(err)
+      })
+
       axios({
         url: '/service/getUserPhotos.do',
         method: 'get',
@@ -189,9 +173,23 @@ export default {
           userid: that.$store.state.userId
         }
       }).then(function (res) {
-        var path = 'http://45.77.182.195:8080/Unitoto-web/'
         for (var i = 0; i < res.data.length; i++) {
           that.photos.push(path + res.data[i].photoaddress)
+        }
+      }).catch(function (err) {
+        that.$Message.error('无法从服务器获取内容，请稍后重试')
+        console.log(err)
+      })
+
+      axios({
+        url: '/service/getFollowings.do',
+        method: 'get',
+        params: {
+          userid: that.$store.state.userId
+        }
+      }).then(function (res) {
+        for (var i = 0; i < res.data.length; i++) {
+          that.following.push(res.data[i].username)
         }
       }).catch(function (err) {
         that.$Message.error('无法从服务器获取内容，请稍后重试')

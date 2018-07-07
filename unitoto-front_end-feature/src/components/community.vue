@@ -29,7 +29,6 @@
 </template>
     
 <script>
-import axios from 'axios'
 export default {
   data () {
     return {
@@ -69,25 +68,7 @@ export default {
       ]
     }
   },
-  method: {
-    created: function () {
-      var that = this
-      axios({
-        url: '/service/getUserCommunities.do',
-        method: 'get',
-        params: {
-          userid: that.$store.state.userId
-        }
-      })
-      console.log('community')
-      .then(function (res) {
-        console.log(res)
-      }).catch(function (err) {
-        that.$Message.error('无法从服务器获取内容，请稍后重试')
-        console.log(err)
-      })
-    }
-  }
+  method: {}
 }
 </script>
 

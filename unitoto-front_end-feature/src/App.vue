@@ -5,12 +5,6 @@
         <a v-on:click='jump("main")' class="main-logo"><img src="./assets/logo.png" /></a>
         <Button type="ghost" icon="ios-search" class="main-search" v-on:click='jump("search")'>Search</Button>
         <div class="main-menu">
-          <MenuItem name="map">
-              地图
-          </MenuItem>
-          <MenuItem name="community" v-on:click='jump("community")'>
-              社区
-          </MenuItem>
           <div class="main-userIcon" v-on:click='jump("user")'>
             <Avatar icon="person" />
           </div>

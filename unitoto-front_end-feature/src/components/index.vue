@@ -88,7 +88,6 @@ export default {
         } else {
           that.isComplete = true
         }
-        console.log(res)
       })
       .catch(function (err) {
         that.$Message.error('无法从服务器获取内容，请稍后重试')
