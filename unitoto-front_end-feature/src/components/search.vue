@@ -6,18 +6,17 @@
       </Input>
       <DropdownMenu slot="list" class="search-menu">
         <div class="search-title">
-          <span>User</span>
-          <router-link to="www.baidu.com" class="link">more</router-link>
+          <span>SearchByUsername</span>
         </div>
-        <DropdownItem v-for="user in users" :name="user.name" :key="user.name">
-          <Avatar :src="user.avatar"></Avatar>
-          <span>{{user.name}}</span>
-        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
     <div class="recommend" v-show="if_show_recommend">
       <Row v-for="(row, index_row) in recommendRows" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
-        <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8"><img :src="col.src" :alt="col.alt"></Col>
+        <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" justify="space-between" span="8">
+          <img src="https://tse3.mm.bing.net/th?id=OIP.CMy2WiMRd-dYJzKGC77WBgHaFj&pid=Api">
+          <span>{{col.userName}}</span>
+          <Button @click="follow(col.userId)" type="primary" shape="circle" class="follow" icon="person"></Button>
+        </Col>
       </Row>
     </div>
     <router-view></router-view>
@@ -65,69 +64,76 @@
   .code-row-bg {
     margin-top: 5px;
   }
+  .follow {
+    position: relative;
+    min-width: 40px;
+    min-height: 40px;
+    margin-left: 67%;
+  }
 </style>
 
 <script>
+  import axios from 'axios'
   export default {
     data () {
       return {
         visible: false,
         users: [
-          {
-            // send the value inputted by user to server to get the matched user list
-            id: '1',
-            name: 'test1',
-            avatar: 'http://img3.3lian.com/2013/c2/14/d/11.jpg'
-          },
-          {
-            id: '2',
-            name: 'test2',
-            avatar: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg'
-          }
+          // {
+          //   // send the value inputted by user to server to get the matched user list
+          //   id: '1',
+          //   name: 'test1',
+          //   avatar: 'http://img3.3lian.com/2013/c2/14/d/11.jpg'
+          // },
+          // {
+          //   id: '2',
+          //   name: 'test2',
+          //   avatar: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg'
+          // }
         ],
         recommendRows: [
-          [
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            }
-          ],
-          [
-            {
-              src: 'http://pic.58pic.com/58pic/14/20/58/95a58PICXQp_1024.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img4.imgtn.bdimg.com/it/u=832634338,2138864592&fm=27&gp=0.jpg',
-              alt: ''
-            }
-          ],
-          [
-            {
-              src: 'http://img5.imgtn.bdimg.com/it/u=806391916,1690025371&fm=11&gp=0.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img4.imgtn.bdimg.com/it/u=3201723314,3315056898&fm=27&gp=0.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg',
-              alt: ''
-            }
-          ]
+          // [
+          //   {
+          //     src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
+          //     alt: ''
+          //   },
+          //   {
+          //     src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
+          //     alt: ''
+          //   },
+          //   {
+          //     src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
+          //     alt: ''
+          //   }
+          // ],
+          // [
+          //   {
+          //     src: 'http://pic.58pic.com/58pic/14/20/58/95a58PICXQp_1024.jpg',
+          //     alt: ''
+          //   },
+          //   {
+          //     src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
+          //     alt: ''
+          //   },
+          //   {
+          //     src: 'http://img4.imgtn.bdimg.com/it/u=832634338,2138864592&fm=27&gp=0.jpg',
+          //     alt: ''
+          //   }
+          // ],
+          // [
+          //   {
+          //     src: 'http://img5.imgtn.bdimg.com/it/u=806391916,1690025371&fm=11&gp=0.jpg',
+          //     alt: ''
+          //   },
+          //   {
+          //     src: 'http://img4.imgtn.bdimg.com/it/u=3201723314,3315056898&fm=27&gp=0.jpg',
+          //     alt: ''
+          //   },
+          //   {
+          //     src: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg',
+          //     alt: ''
+          //   }
+          // ]
         ],
         value: '',
         if_show_recommend: true,
@@ -136,12 +142,55 @@
     },
     methods: {
       confirmSearch: function (event) {
+        var that = this
         // send the value to get the result from server
-        alert('yes')
+        axios({
+          url: '/service/getUserByUserName.do',
+          method: 'get',
+          params: {
+            userName: that.value
+          }
+        }).then(function (res) {
+          that.users = []
+          that.recommendRows = []
+          var usersPerRow = []
+          for (var i = 0; i < res.data.length; i++) {
+            var user = res.data[i]
+            that.users.push(user)
+            usersPerRow.push(user)
+            if (i % 3 === 0) {
+              that.recommendRows.push(usersPerRow)
+              usersPerRow = []
+            }
+          }
+          that.recommendRows.push(usersPerRow)
+          that.if_show_recommend = true
+        }).catch(function (err) {
+          console.log(err)
+          that.$Message.error('搜索失败，请稍后重试')
+        })
       },
       confirmSelect: function (name) {
         this.value = name
         this.visible = false
+      },
+      follow: function (target) {
+        var that = this
+        console.log(that.$store.state.userId)
+        console.log(target)
+        axios({
+          url: '/service/addFollow.do',
+          method: 'post',
+          param: {
+            userid: that.$store.state.userId,
+            targetid: target
+          }
+        }).then(function (res) {
+          console.log(res)
+        }).catch(function (err) {
+          console.log(err)
+          console.log('关注失败，请稍后重试')
+        })
       },
       hide_dropdown_list: function () {
         this.visible = false

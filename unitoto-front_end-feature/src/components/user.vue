@@ -11,9 +11,9 @@
       </p>
       <p class="show" v-if='show && show.length > 0'>个人简介： {{show}}</p>
     </div>
-    <div class = "tab-div">
-      <Tabs value="name1" type='card'>
-        <TabPane label="相 册" icon="images">
+    <div class="tab-div">
+      <Tabs @on-click="lookCommunity" on-tab-remove="name2" value="name1" type='card'>
+        <TabPane label="相 册" icon="images" closable>
           <div class="user-recommend" v-show="if_show_recommend">
             <!-- <Row v-for="(row, index_row) in photos" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
               <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8"><img :src=col.src :alt="col.alt"></Col>
@@ -25,19 +25,17 @@
             </Row>
           </div>
         </TabPane>
-        <TabPane label="社 区" icon="ios-home">
+        <TabPane label="社 区" icon="ios-home" closable>
           <Row>
             <Col>
               <Card>
                 <p slot="title">已加入的社区</p>
-                <p>社区1</p>
-                <p>社区2</p>
-                <p>社区3</p>
+                <p v-for='community in communities'>{{community}}</p>
               </Card>
             </Col>
           </Row>
         </TabPane>
-        <TabPane label="关 注" icon="eye">
+        <TabPane label="关 注" icon="eye" closable>
           <Row>
             <Col >
               <Card>
@@ -124,6 +122,7 @@ export default {
   data () {
     return {
       photos: [],
+      communities: [],
       value: '',
       if_show_recommend: true,
       user: '',
@@ -149,6 +148,25 @@ export default {
     operateImg: function (index) {
       this.shownImg = index
       this.isShown = true
+    },
+    lookCommunity: function (res) {
+      var that = this
+      axios({
+        url: '/service/getUserCommunities.do',
+        method: 'get',
+        params: {
+          userid: that.$store.state.userId
+        }
+      }).then(function (res) {
+        console.log('community')
+        console.log(res)
+        for (var i = 0; i < res.data.length; i++) {
+          that.communities.push(res.data[i])
+        }
+      }).catch(function (err) {
+        that.$Message.error('无法从服务器获取内容，请稍后重试')
+        console.log(err)
+      })
     }
   },
   created: function () {
@@ -163,6 +181,7 @@ export default {
       }, 3000)
     } else {
       this.isLogin = true
+      // get photos, community and followings users once created
       axios({
         url: '/service/getUserPhotos.do',
         method: 'get',
@@ -173,10 +192,6 @@ export default {
         var path = 'http://45.77.182.195:8080/Unitoto-web/'
         for (var i = 0; i < res.data.length; i++) {
           that.photos.push(path + res.data[i].photoaddress)
-          console.log('!!!')
-          console.log(that.photos)
-          console.log('!!!')
-          console.log(res)
         }
       }).catch(function (err) {
         that.$Message.error('无法从服务器获取内容，请稍后重试')
