@@ -15,9 +15,10 @@
             <!-- <Row v-for="(row, index_row) in photos" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
               <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8"><img :src=col.src :alt="col.alt"></Col>
             </Row> -->
-            <Row v-for='i in Math.ceil(photos.length / 3)' :key='i' class="code-row-bg">
-              <Col span='8' v-for='j in 3' :key='j' class="item-img">
-                <img v-if='(i - 1) * 3 + j - 1 < photos.length' :src='photos[(i - 1) * 3 + j - 1]' class='add-showImg' @click='operateImg((i - 1) * 3 + j - 1)' />
+            <Row v-for='item in photos' :key='item' class="code-row-bg">
+              <Col span='23' class="item-img">
+                <img v-bind:src='item' class='add-showImg' />
+                <br><br>
               </Col>
             </Row>
           </div>
@@ -25,7 +26,7 @@
         <TabPane label="关 注" icon="eye">
           <Row>
             <Col>
-              <Card dis-hover>
+              <Card dis-hover class="message-font">
                 <ul>
                   <li v-for='item in following' :key='item'>
                     {{ item }}
