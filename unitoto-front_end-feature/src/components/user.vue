@@ -191,15 +191,7 @@ export default {
       }).then(function (res) {
         var path = 'http://45.77.182.195:8080/Unitoto-web/'
         for (var i = 0; i < res.data.length; i++) {
-<<<<<<< HEAD
           that.photos.push(path + res.data[i].photoaddress)
-=======
-          that.photos.push(path+res.data[i].photoaddress)
-          console.log('!!!')
-          console.log(that.photos)
-          console.log('!!!')
-          console.log(res)
->>>>>>> e7ab454c7e26246784f379e30d6393c9d1640dc1
         }
       }).catch(function (err) {
         that.$Message.error('无法从服务器获取内容，请稍后重试')
