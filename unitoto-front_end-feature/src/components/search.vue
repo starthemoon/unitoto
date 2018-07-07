@@ -6,15 +6,16 @@
       </Input>
       <DropdownMenu slot="list" class="search-menu">
         <div class="search-title">
-          <span>SearchUserByUserName</span>
+          <span>please input username to search</span>
         </div>
       </DropdownMenu>
     </Dropdown>
     <div class="recommend" v-show="if_show_recommend">
       <Row v-for="(row, index_row) in recommendRows" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
-        <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8"><img src="https://tse3.mm.bing.net/th?id=OIP.CMy2WiMRd-dYJzKGC77WBgHaFj&pid=Api">
+        <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8">
         <span>{{col.userName}}</span>
-        <Button class="follow" type="primary" shape="circle" @click="follow(col.userId)" ></Button>
+        <Button v-if="col.canFollow" class="follow" type="error" shape="circle" @click="follow(col.userId)">F</Button>
+        <Button v-else class="follow" type="primary" shape="circle" @click="unfollow(col.userId)">U</Button>
         </Col>
       </Row>
     </div>
@@ -66,7 +67,9 @@
   .follow {
     min-width: 50px;
     min-height: 50px;
-    margin-left: 67%;
+    font: outline;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 150%;
   }
 </style>
 
@@ -76,63 +79,9 @@
     data () {
       return {
         visible: false,
-        users: [
-          // {
-          //   // send the value inputted by user to server to get the matched user list
-          //   id: '1',
-          //   name: 'test1',
-          //   avatar: 'http://img3.3lian.com/2013/c2/14/d/11.jpg'
-          // },
-          // {
-          //   id: '2',
-          //   name: 'test2',
-          //   avatar: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg'
-          // }
-        ],
-        recommendRows: [
-          // [
-          //   {
-          //     src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-          //     alt: ''
-          //   },
-          //   {
-          //     src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-          //     alt: ''
-          //   },
-          //   {
-          //     src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-          //     alt: ''
-          //   }
-          // ],
-          // [
-          //   {
-          //     src: 'http://pic.58pic.com/58pic/14/20/58/95a58PICXQp_1024.jpg',
-          //     alt: ''
-          //   },
-          //   {
-          //     src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-          //     alt: ''
-          //   },
-          //   {
-          //     src: 'http://img4.imgtn.bdimg.com/it/u=832634338,2138864592&fm=27&gp=0.jpg',
-          //     alt: ''
-          //   }
-          // ],
-          // [
-          //   {
-          //     src: 'http://img5.imgtn.bdimg.com/it/u=806391916,1690025371&fm=11&gp=0.jpg',
-          //     alt: ''
-          //   },
-          //   {
-          //     src: 'http://img4.imgtn.bdimg.com/it/u=3201723314,3315056898&fm=27&gp=0.jpg',
-          //     alt: ''
-          //   },
-          //   {
-          //     src: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg',
-          //     alt: ''
-          //   }
-          // ]
-        ],
+        users: [],
+        recommendRows: [],
+        following: [],
         value: '',
         if_show_recommend: true,
         isLogin: true
@@ -145,15 +94,25 @@
         axios({
           url: '/service/getUserByUserName.do',
           method: 'get',
-          param: {
+          params: {
             userName: that.value
           }
         }).then(function (res) {
+          if (res.data.length === 0) {
+            alert('该用户名不存在')
+          }
           var usersPerRow = []
           that.users = []
           that.recommendRows = []
           for (var i = 0; i < res.data.length; i++) {
             var user = res.data[i]
+            user.canFollow = true
+            for (var j = 0; j < that.following.length; j++) {
+              if (that.following[j].username === user.userName) {
+                user.canFollow = false
+                break
+              }
+            }
             that.users.push(user)
             usersPerRow.push(user)
             if (i !== 0 && i % 3 === 0) {
@@ -172,14 +131,51 @@
         axios({
           url: '/service/addFollow.do',
           method: 'post',
-          param: {
+          params: {
             userid: that.$store.state.userId,
             targetid: targetid
           }
         }).then(function (res) {
+          if (res.data === false) {
+            alert('关注失败')
+          } else {
+            alert('关注成功')
+            for (var i = 0; i < that.users.length; i++) {
+              if (that.users[i].userId === targetid) {
+                that.users[i].canFollow = false
+                break
+              }
+            }
+          }
         }).catch(function (err) {
-          console.log(err)
-          console.log('关注错误，请稍后重试')
+          alert(err)
+          that.$Message.error('发生错误，请稍后重试')
+        })
+      },
+      unfollow: function (targetid) {
+        var that = this
+        axios({
+          url: '/service/deleteFollow.do',
+          method: 'post',
+          params: {
+            userid: that.$store.state.userId,
+            targetid: targetid
+          }
+        }).then(function (res) {
+          if (res.data === false) {
+            alert('删除关注失败')
+          } else {
+            alert('删除关注成功')
+            for (var i = 0; i < that.users.length; i++) {
+              if (that.users[i].userId === targetid) {
+                that.users[i].canFollow = true
+                break
+              }
+            }
+          }
+        }).catch(function (err) {
+          alert(err)
+          that.$Message.error('发生错误，请稍后重试')
         })
       },
       confirmSelect: function (name) {
@@ -195,19 +191,35 @@
         this.if_show_recommend = false
       }
     },
-    // created: function () {
-    //   var that = this
-    //   if (this.$store.state.userId === '') {
-    //     this.isLogin = false
-    //     this.$Message.error('您尚未登录，3s后回到主页')
-    //     var c = setInterval(function () {
-    //       that.$router.push('/')
-    //       clearInterval(c)
-    //     }, 3000)
-    //   } else {
-    //     this.isLogin = true
-    //   }
-    // },
+    created: function () {
+      var that = this
+      if (this.$store.state.userId === '') {
+        this.isLogin = false
+        this.$Message.error('您尚未登录，3s后回到主页')
+        var c = setInterval(function () {
+          that.$router.push('/')
+          clearInterval(c)
+        }, 3000)
+      } else {
+        this.isLogin = true
+        axios({
+          url: '/service/getFollowings.do',
+          method: 'get',
+          params: {
+            userid: that.$store.state.userId
+          }
+        }).then(function (res) {
+          console.log(res.data)
+          that.following = []
+          for (var i = 0; i < res.data.length; i++) {
+            that.following.push(res.data[i])
+          }
+        }).catch(function (err) {
+          console.log('获取用户关注人列表失败')
+          that.$Message.error(err)
+        })
+      }
+    },
     watch: {
       value: function (curVal, oldVal) {
         // this.visible = true
