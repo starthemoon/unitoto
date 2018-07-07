@@ -89,9 +89,10 @@ export default {
     }
   },
   data: function () {
+    var path = 'http://45.77.182.195:8080/Unitoto-web/'
     return {
       userId: this.$props.object.userId,
-      imgSrc: this.$props.object.imgSrc,
+      imgSrc: path + this.$props.object.imgSrc,
       uploader: this.$props.object.uploader,
       likeAmount: this.$props.object.likeAmount,
       comments: this.$props.object.comments,

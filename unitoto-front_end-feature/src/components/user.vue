@@ -1,10 +1,7 @@
 <template>
   <div v-if='isLogin'>
-    <div class="demo-avatar">
-        <Avatar :style="{background: color}">{{ user }}</Avatar>
-    </div>
     <div class="message-font">
-      <p class="user_font">{{user}}</p>
+      <p class="user_font">{{name}}</p>
       <p class="Tel-font">
         <span v-if='tel && tel.length > 0'>Tel：{{tel?tel:''}}</span>
         <span v-if='Email && Email.length > 0'>E-mail: {{Email}}</span>
@@ -15,36 +12,26 @@
       <Tabs value="name1" type='card'>
         <TabPane label="相 册" icon="images">
           <div class="user-recommend" v-show="if_show_recommend">
-            <Row v-for="(row, index_row) in photos" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
+            <!-- <Row v-for="(row, index_row) in photos" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
               <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8"><img :src=col.src :alt="col.alt"></Col>
-            </Row>
-            <!-- <Row v-for='i in Math.ceil(photos.length / 3)' :key='i' class="code-row-bg">
-              <Col span='8' v-for='j in 3' :key='j' class="item-img">
-                <img v-if='(i - 1) * 3 + j - 1 < photos.length' :src='photos[(i - 1) * 3 + j - 1]' class='add-showImg' @click='operateImg((i - 1) * 3 + j - 1)' />
-              </Col>
             </Row> -->
+            <Row v-for='item in photos' :key='item' class="code-row-bg">
+              <Col span='23' class="item-img">
+                <img v-bind:src='item' class='add-showImg' />
+                <br><br>
+              </Col>
+            </Row>
           </div>
-        </TabPane>
-        <TabPane label="社 区" icon="ios-home">
-          <Row>
-            <Col>
-              <Card>
-                <p slot="title">已加入的社区</p>
-                <p>社区1</p>
-                <p>社区2</p>
-                <p>社区3</p>
-              </Card>
-            </Col>
-          </Row>
         </TabPane>
         <TabPane label="关 注" icon="eye">
           <Row>
-            <Col >
-              <Card>
-                <p slot="title">正在关注</p>
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
+            <Col>
+              <Card dis-hover class="message-font">
+                <ul>
+                  <li v-for='item in following' :key='item'>
+                    {{ item }}
+                  </li>
+                </ul>
               </Card>
             </Col>
           </Row>
@@ -123,50 +110,9 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      photos: [
-          [
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-          ],
-          [
-            {
-              src: 'http://pic.58pic.com/58pic/14/20/58/95a58PICXQp_1024.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img3.3lian.com/2013/c2/14/d/11.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img4.imgtn.bdimg.com/it/u=832634338,2138864592&fm=27&gp=0.jpg',
-              alt: ''
-            },
-          ],
-          [
-            {
-              src: 'http://img5.imgtn.bdimg.com/it/u=806391916,1690025371&fm=11&gp=0.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://img4.imgtn.bdimg.com/it/u=3201723314,3315056898&fm=27&gp=0.jpg',
-              alt: ''
-            },
-            {
-              src: 'http://pic.58pic.com/58pic/13/52/59/34q58PIC3pT_1024.jpg',
-              alt: ''
-            },
-          ]
-        ],
+      photos: [],
+      following: [],
+      name: '',
       value: '',
       if_show_recommend: true,
       user: '',
@@ -205,7 +151,22 @@ export default {
         clearInterval(c)
       }, 3000)
     } else {
+      var path = 'http://localhost:8080/Unitoto-web/'
       this.isLogin = true
+
+      axios({
+        url: '/service/getUserInformation.do',
+        method: 'get',
+        params: {
+          userid: that.$store.state.userId
+        }
+      }).then(function (res) {
+        that.name = res.data.userName
+      }).catch(function (err) {
+        that.$Message.error('无法从服务器获取内容，请稍后重试')
+        console.log(err)
+      })
+
       axios({
         url: '/service/getUserPhotos.do',
         method: 'get',
@@ -214,7 +175,22 @@ export default {
         }
       }).then(function (res) {
         for (var i = 0; i < res.data.length; i++) {
-          that.photos.push(res.data[i].photoadress)
+          that.photos.push(path + res.data[i].photoaddress)
+        }
+      }).catch(function (err) {
+        that.$Message.error('无法从服务器获取内容，请稍后重试')
+        console.log(err)
+      })
+
+      axios({
+        url: '/service/getFollowings.do',
+        method: 'get',
+        params: {
+          userid: that.$store.state.userId
+        }
+      }).then(function (res) {
+        for (var i = 0; i < res.data.length; i++) {
+          that.following.push(res.data[i].username)
         }
       }).catch(function (err) {
         that.$Message.error('无法从服务器获取内容，请稍后重试')
