@@ -1,7 +1,7 @@
 <template>
   <div v-if="true">
     <div trigger="custom" :visible="visible" @on-click="confirmSelect" class="search-main-content">
-      <Input v-model="value" placeholder="请输入想要搜索的用户名字" @on-keyup.enter="confirmSearch" @on-blur="hide_dropdown_list" @on-focus="show_dropdown_list">
+      <Input v-model="value" placeholder="请输入想要搜索的用户名字" @on-keyup.enter="confirmSearch" @on-blur="hide_dropdown_list" @on-focus="show_dropdown_list_and_get_follow">
         <Button @click="confirmSearch" slot="append" icon="ios-search"></Button>
       </Input>
       <!-- <DropdownMenu slot="list" class="search-menu">
@@ -118,7 +118,7 @@
             var user = res.data[i]
             user.canFollow = true
             for (var j = 0; j < that.following.length; j++) {
-              if (that.following[j].username === user.userName) {
+              if (that.following[j].userid === user.userId) {
                 user.canFollow = false
                 break
               }
@@ -194,22 +194,10 @@
         this.visible = false
         this.if_show_recommend = true
       },
-      show_dropdown_list: function () {
+      show_dropdown_list_and_get_follow: function () {
+        var that = this
         this.visible = true
         this.if_show_recommend = false
-      }
-    },
-    created: function () {
-      var that = this
-      if (this.$store.state.userId === '') {
-        this.isLogin = false
-        this.$Message.error('您尚未登录，3s后回到主页')
-        var c = setInterval(function () {
-          that.$router.push('/')
-          clearInterval(c)
-        }, 3000)
-      } else {
-        this.isLogin = true
         axios({
           url: '/service/getFollowings.do',
           method: 'get',
@@ -226,6 +214,19 @@
           console.log('获取用户关注人列表失败')
           that.$Message.error(err)
         })
+      }
+    },
+    created: function () {
+      var that = this
+      if (this.$store.state.userId === '') {
+        this.isLogin = false
+        this.$Message.error('您尚未登录，3s后回到主页')
+        var c = setInterval(function () {
+          that.$router.push('/')
+          clearInterval(c)
+        }, 3000)
+      } else {
+        this.isLogin = true
       }
     },
     watch: {
