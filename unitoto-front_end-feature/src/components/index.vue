@@ -60,7 +60,7 @@ export default {
       method: 'get',
       url: '/service/getImageDownflashing.do',
       params: {
-        userid: this.$store.state.userId
+        userId: this.$store.state.userId
       }
     })
       .then(function (res) {
