@@ -3,10 +3,12 @@
     <Menu ref='menu' mode="horizontal" class='main-header' v-on:on-select='jump'>
       <div class="main-wrap-header">
         <a v-on:click='jump("main")' class="main-logo"><img src="./assets/logo.png" /></a>
-        <Button type="ghost" icon="ios-search" class="main-search" v-on:click='jump("search")'>Search</Button>
         <div class="main-menu">
           <div class="main-userIcon" v-on:click='jump("user")'>
             <Avatar icon="person" />
+          </div>
+          <div class="main-userIcon" v-on:click='jump("search")'>
+            <Avatar icon="ios-search" />
           </div>
         </div>
       </div>

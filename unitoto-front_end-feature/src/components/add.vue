@@ -1,8 +1,7 @@
 <template>
   <div class='add-add'>
     <Input type='textarea' :autosize='{minRows: 5, maxRows: 5}' placeholder='写下你想到的...' v-model='message'></Input>
-    <Upload multiple accept='image/*' class='add-uploader' action='/upload' ref='upload'
-    :before-upload='beforeAddImg' :show-upload-list=false>
+    <Upload multiple accept='image/*' class='add-uploader' action='/upload' ref='upload' :before-upload='beforeAddImg' :show-upload-list=false>
       <div><Icon type="camera" size="50"></Icon></div>
     </Upload>
     <div class='add-preview'>
@@ -15,7 +14,7 @@
       </Row>
     </div>
     <div class='add-button'>
-      <Button type="primary" long @click='upload'>发表</Button>
+      <Button type="primary" long @click='upload'>上传</Button>
       <Button type="warning" long @click='cancelUpload'>取消</Button>
     </div>
 
@@ -129,14 +128,14 @@ export default {
           'Accept-Language': 'en'
         }
       }).then(function (res) {
-        that.$Message.success('发表动态成功，即将回到主页')
+        that.$Message.success('上传成功，即将回到主页')
         var c = setInterval(function () {
           that.$router.push('/')
           clearInterval(c)
         }, 2000)
       }).catch(function (err) {
         console.log(err)
-        that.$Message.error('发表动态失败，请稍后重试')
+        that.$Message.error('上传失败，请稍后重试')
       })
     },
     cancelUpload: function () {

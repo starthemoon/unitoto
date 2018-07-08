@@ -1,7 +1,7 @@
 <template>
   <div>
     <Button type="primary" shape="circle" icon="plus-round" size='large' class='index-addButton' @click='addImg'></Button>
-    <div class='index-img' v-for='item in imgArr'>
+    <div class='index-img' v-for='item in imgArr' :key='item'>
       <img-card v-bind:object="item"></img-card>
     </div>
     <infinite-loading @infinite="loadMore" ref='upFresh'>
@@ -60,7 +60,7 @@ export default {
       method: 'get',
       url: '/service/getImageDownflashing.do',
       params: {
-        userId: this.$store.state.userId
+        userid: this.$store.state.userId
       }
     })
       .then(function (res) {
@@ -106,7 +106,7 @@ export default {
         return
       }
       var params = {
-        userId: this.$store.state.userId
+        userid: this.$store.state.userId
       }
       if (this.imgArr.length > 0) {
         params.photoId = this.imgArr[this.imgArr.length - 1].photoId

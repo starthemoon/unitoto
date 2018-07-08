@@ -17,7 +17,7 @@
             </Row> -->
             <Row v-for='item in photos' :key='item' class="code-row-bg">
               <Col span='23' class="item-img">
-                <img v-bind:src='item' class='add-showImg' />
+                <img v-bind:src='item' class='imgcard-image' />
                 <br><br>
               </Col>
             </Row>
@@ -26,7 +26,7 @@
         <TabPane label="关 注" icon="eye">
           <Row>
             <Col>
-              <Card dis-hover class="message-font">
+              <Card dis-hover class="following-font">
                 <ul>
                   <li v-for='item in following' :key='item'>
                     {{ item }}
@@ -49,6 +49,11 @@
 </template>
 
 <style>
+  .imgcard-image {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
   .log-out{
     padding: 10px 5px;
     margin-top: 50px;
@@ -60,6 +65,11 @@
   .message-font{
     font-family:Helvetica;
     font-size: 30px;
+    text-align: center;
+  }
+  .following-font{
+    font-family:Helvetica;
+    font-size: 20px;
     text-align: center;
   }
   .Tel-font {

@@ -381,4 +381,11 @@ public class PhotoAction extends BaseAction{
 	    }
 	    return jsonArray;
 	}
+	
+	@RequestMapping("/deletePhoto")
+	@ResponseBody
+	public boolean deletePhoto(HttpServletRequest request) {
+	    String photoId = request.getParameter("photoId");
+	    return photoService.deletePhoto(photoId);
+	}
 }
