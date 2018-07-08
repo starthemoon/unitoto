@@ -38,18 +38,18 @@ public class SearchAction extends BaseAction{
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json; charset=utf-8");
 	    
-		String userName = request.getParameter("userName");
+		String userName = request.getParameter("username");
 		ArrayList<User> users = userService.getUserByUserName(userName);
 		JSONArray userJsonArray = new JSONArray();
 		
 		if (users != null) {
 		    for (User user : users) {
 			JSONObject userJson = new JSONObject();
-			userJson.put("userId", user.getUserId());
-			userJson.put("userName", user.getUserName());
-			userJson.put("userPhone", user.getUserPhone());
-			userJson.put("userEmail", user.getUserEmail());
-			userJson.put("userDescription", user.getUserDescription());
+			userJson.put("userid", user.getUserId());
+			userJson.put("username", user.getUserName());
+			userJson.put("userphone", user.getUserPhone());
+			userJson.put("useremail", user.getUserEmail());
+			userJson.put("userdescription", user.getUserDescription());
 			userJsonArray.add(userJson);
 		    }
 		}
@@ -75,10 +75,10 @@ public class SearchAction extends BaseAction{
 		User user = userService.getUserByUserId(userid);
 		
 		if (user != null) {
-			userJson.put("userName", user.getUserName());
-			userJson.put("userPhone", user.getUserPhone());
-			userJson.put("userEmail", user.getUserEmail());
-			userJson.put("userDescription", user.getUserDescription());
+			userJson.put("username", user.getUserName());
+			userJson.put("userphone", user.getUserPhone());
+			userJson.put("useremail", user.getUserEmail());
+			userJson.put("userdescription", user.getUserDescription());
 		}
 		
 		OutputStream out = response.getOutputStream();
