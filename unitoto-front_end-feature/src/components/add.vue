@@ -107,6 +107,10 @@ export default {
         this.$Message.error('您尚未选择图片')
         return
       }
+      if (this.$store.state.userId.length === 0) {
+        this.$Message.error('您尚未登录')
+        return
+      }
       var that = this
       var data = new FormData()
       data.append('photoContext', this.message)

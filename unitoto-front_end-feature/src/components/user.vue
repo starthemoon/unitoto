@@ -139,11 +139,13 @@ export default {
     logout: function () {
       var that = this
       this.$store.commit('reset')
-      this.$Message.success('登出成功，即将返回主界面')
+      this.$cookie.delete('username')
+      this.$cookie.delete('password')
+      this.$Message.success('退出成功，即将返回主界面')
       var c = setInterval(function () {
         that.$router.push('/')
         clearInterval(c)
-      }, 2000)
+      }, 1000)
     },
     operateImg: function (index) {
       this.shownImg = index
@@ -155,13 +157,12 @@ export default {
     var that = this
     if (this.$store.state.userId === '') {
       this.isLogin = false
-      this.$Message.error('您尚未登录，3s后回到主页')
+      // this.$Message.error('您尚未登录，3s后回到主页')
       var c = setInterval(function () {
         that.$router.push('/')
         clearInterval(c)
       }, 3000)
     } else {
-      var path = 'http://localhost:8080/Unitoto-web/'
       this.isLogin = true
 
       axios({
@@ -171,7 +172,7 @@ export default {
           userid: that.$store.state.userId
         }
       }).then(function (res) {
-        that.name = res.data.userName
+        that.name = res.data.username
       }).catch(function (err) {
         that.$Message.error('无法从服务器获取内容，请稍后重试')
         console.log(err)
@@ -184,6 +185,7 @@ export default {
           userid: that.$store.state.userId
         }
       }).then(function (res) {
+        var path = 'http://localhost:8080/Unitoto-web/'
         for (var i = 0; i < res.data.length; i++) {
           that.photos.push(path + res.data[i].photoaddress)
         }
