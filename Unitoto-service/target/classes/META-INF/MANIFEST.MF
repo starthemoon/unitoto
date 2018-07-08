@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: 81213
+Built-By: James
 Class-Path: lib/Unitoto-api-0.0.1-SNAPSHOT.jar lib/junit-4.11.jar lib/
  hamcrest-core-1.3.jar lib/spring-core-4.1.0.RELEASE.jar lib/spring-tx
  -4.1.0.RELEASE.jar lib/spring-aop-4.1.0.RELEASE.jar lib/spring-beans-
@@ -14,7 +14,7 @@ Class-Path: lib/Unitoto-api-0.0.1-SNAPSHOT.jar lib/junit-4.11.jar lib/
  -spring-1.2.2.jar lib/mybatis-generator-core-1.3.2.jar lib/mysql-conn
  ector-java-5.1.46.jar lib/commons-dbcp-1.4.jar lib/commons-pool-1.5.4
  .jar
-Build-Jdk: 1.8.0_171
+Build-Jdk: 1.8.0_144
 Created-By: Maven Integration for Eclipse
 Main-Class: com.avenger.declare.Start
 
