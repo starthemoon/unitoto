@@ -106,7 +106,7 @@ export default {
         return
       }
       var params = {
-        userid: this.$store.state.userId
+        userId: this.$store.state.userId
       }
       if (this.imgArr.length > 0) {
         params.photoId = this.imgArr[this.imgArr.length - 1].photoId
