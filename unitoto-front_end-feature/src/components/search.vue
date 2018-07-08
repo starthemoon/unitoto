@@ -152,6 +152,7 @@
             for (var i = 0; i < that.users.length; i++) {
               if (that.users[i].userId === targetid) {
                 that.users[i].canFollow = false
+                that.following.push(that.users[i])
                 break
               }
             }
@@ -180,6 +181,13 @@
                 break
               }
             }
+            var newFollow = []
+            for (var j = 0; j < that.following.length; j++) {
+              if (that.following[j].userid !== targetid) {
+                newFollow.push(that.following[j])
+              }
+            }
+            that.following = newFollow
           }
         }).catch(function (err) {
           alert(err)
