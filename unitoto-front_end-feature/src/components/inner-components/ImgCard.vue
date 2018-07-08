@@ -5,10 +5,9 @@
         <div class="imgcard-userinfo">
           <Avatar class='imgcard-icon' icon="person" size="large" />
           <p class='imgcard-name'>{{uploader}}</p>
+          <p class='context-front'>{{photoContext}}</p>
         </div>
-        <div class='imgcard-imageroom'>
-          <img class='imgcard-image' v-bind:src='imgSrc' />
-        </div>
+        <img class='imgcard-image' v-bind:src='imgSrc' />
         <div class="imgcard-operate">
           <div class='imgcard-like'>
             <Button v-on:click="addLikeNum" type="ghost" shape="circle" icon="ios-heart-outline"></Button>
@@ -18,12 +17,6 @@
             <Icon type="ios-chatbubble-outline" size=30></Icon>
             <p class='imgcard-commentnum'>{{commentAmount}}</p>
           </div> -->
-          <div class='imgcard-hotcomments' v-for='item in comments'>
-            <div class='imgcard-hotcomment'>
-              <a>{{item.author}}</a>
-              <p>: {{item.content}}</p>
-            </div>
-          </div>
         </div>
       </div>
     </Card>
@@ -38,6 +31,11 @@
   margin: 20px auto;
   width: 100%;
 }
+.context-front {
+  font-family: Helvetica;
+  font-size: 20px;
+  margin-left: 50px;
+}
 .imgcard-imageroom {
   background-color: #EEEEEE;
   margin: 3px 5px;
@@ -50,7 +48,7 @@
 .imgcard-name {
   vertical-align: middle;
   display: inline;
-  font-size: 20px;
+  font-size: 30px;
   padding: 0 5px;
 }
 .imgcard-userinfo {
@@ -90,7 +88,7 @@ export default {
     }
   },
   data: function () {
-    var path = 'http://localhost:8080/Unitoto-web/'
+    var path = 'http://45.77.182.195:8080/Unitoto-web/'
     return {
       userId: this.$props.object.userId,
       imgSrc: path + this.$props.object.imgSrc,
@@ -99,7 +97,8 @@ export default {
       comments: this.$props.object.comments,
       commentAmount: this.$props.object.commentAmount,
       words: this.$props.object.photoContext,
-      photoId: this.$props.object.photoId
+      photoId: this.$props.object.photoId,
+      photoContext: this.$props.object.photoContext
     }
   },
   methods: {

@@ -1,21 +1,23 @@
 <template>
   <div v-if="true">
-    <Dropdown trigger="custom" :visible="visible" @on-click="confirmSelect" class="search-main-content">
-      <Input v-model="value" @on-keyup.enter="confirmSearch" @on-blur="hide_dropdown_list" @on-focus="show_dropdown_list">
+    <div trigger="custom" :visible="visible" @on-click="confirmSelect" class="search-main-content">
+      <Input v-model="value" placeholder="请输入想要搜索的用户名字" @on-keyup.enter="confirmSearch" @on-blur="hide_dropdown_list" @on-focus="show_dropdown_list">
         <Button @click="confirmSearch" slot="append" icon="ios-search"></Button>
       </Input>
-      <DropdownMenu slot="list" class="search-menu">
+      <!-- <DropdownMenu slot="list" class="search-menu">
         <div class="search-title">
           <span>please input username to search</span>
         </div>
-      </DropdownMenu>
-    </Dropdown>
+      </DropdownMenu> -->
+    </div>
     <div class="recommend" v-show="if_show_recommend">
       <Row v-for="(row, index_row) in recommendRows" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
-        <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="8">
-        <span>{{col.userName}}</span>
-        <Button v-if="col.canFollow" class="follow" type="error" shape="circle" @click="follow(col.userId)">F</Button>
-        <Button v-else class="follow" type="primary" shape="circle" @click="unfollow(col.userId)">U</Button>
+        <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="10">
+          <p class="user-font">{{col.userName}}</p>
+          <div class="button-font">
+            <Button v-if="col.canFollow" class="follow" type="error" shape="circle" @click="follow(col.userId)">尚未关注，点击可关注</Button>
+            <Button v-else class="follow" type="primary" shape="circle" @click="unfollow(col.userId)">已关注，点击可取消关注</Button>
+          </div>
         </Col>
       </Row>
     </div>
@@ -24,6 +26,14 @@
 </template>
 
 <style>
+  .user-font{
+    font-family:Helvetica;
+    font-size: 30px;
+    text-align: center;
+  }
+  .button-font{
+    text-align: center;
+  }
   @media screen and (max-width: 700px) {
     .search-main-content {
       width: 80%;
@@ -139,7 +149,6 @@
           if (res.data === false) {
             alert('关注失败')
           } else {
-            alert('关注成功')
             for (var i = 0; i < that.users.length; i++) {
               if (that.users[i].userId === targetid) {
                 that.users[i].canFollow = false
@@ -163,9 +172,8 @@
           }
         }).then(function (res) {
           if (res.data === false) {
-            alert('删除关注失败')
+            alert('取消关注失败')
           } else {
-            alert('删除关注成功')
             for (var i = 0; i < that.users.length; i++) {
               if (that.users[i].userId === targetid) {
                 that.users[i].canFollow = true

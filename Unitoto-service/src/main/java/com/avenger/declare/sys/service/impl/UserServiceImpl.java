@@ -57,7 +57,18 @@ public class UserServiceImpl implements UserService{
 		originalUser.setUserFollowing(following);
 		userMapper.updateUser(originalUser);
 	    } else {
-		if (following.indexOf(addUserId) != -1) {
+		ArrayList<String> followings = new ArrayList<String>();
+		String temp = "";
+		char[] ch = following.toCharArray();
+		for (char c : ch) {
+		    if (c != ';') {
+			temp += c;
+		    } else {
+			followings.add(temp);
+			temp = "";
+		    }
+		}
+		if (followings.contains(addUserId)) {
 		    return false;
 		}
 		following += addUserId + ";";
@@ -76,7 +87,18 @@ public class UserServiceImpl implements UserService{
 		originalUser.setUserFollowed(followed);
 		userMapper.updateUser(originalUser);
 	    } else {
-		if (followed.indexOf(addUserId) != -1) {
+		ArrayList<String> followeds = new ArrayList<String>();
+		String temp = "";
+		char[] ch = followed.toCharArray();
+		for (char c : ch) {
+		    if (c != ';') {
+			temp += c;
+		    } else {
+			followeds.add(temp);
+			temp = "";
+		    }
+		}
+		if (followeds.contains(addUserId)) {
 		    return false;
 		}
 		followed += addUserId + ";";

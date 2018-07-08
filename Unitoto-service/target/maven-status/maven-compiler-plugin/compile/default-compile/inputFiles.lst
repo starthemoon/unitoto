@@ -4,8 +4,8 @@
 /Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/Start.java
 /Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/sys/dao/mapper/LabelMapper.java
 /Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/sys/service/impl/PhotoServiceImpl.java
-/Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/sys/dao/mapper/MultiphotoMapper.java
 /Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/util/IdGeneratorUtil.java
+/Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/sys/dao/mapper/MultiphotoMapper.java
 /Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/sys/dao/mapper/PhotoMapper.java
 /Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/sys/dao/mapper/UserMapper.java
 /Users/James/Documents/GitHub/unitoto/Unitoto-service/src/main/java/com/avenger/declare/sys/service/impl/CommunityServiceImpl.java

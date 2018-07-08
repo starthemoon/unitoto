@@ -1,7 +1,7 @@
 <template>
   <div>
     <Button type="primary" shape="circle" icon="plus-round" size='large' class='index-addButton' @click='addImg'></Button>
-    <div class='index-img' v-for='item in imgArr'>
+    <div class='index-img' v-for='item in imgArr' :key='item'>
       <img-card v-bind:object="item"></img-card>
     </div>
     <infinite-loading @infinite="loadMore" ref='upFresh'>
