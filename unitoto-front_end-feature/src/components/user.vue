@@ -161,7 +161,7 @@ export default {
         clearInterval(c)
       }, 3000)
     } else {
-      var path = 'http://45.77.182.195:8080/Unitoto-web/'
+      var path = 'http://localhost:8080/Unitoto-web/'
       this.isLogin = true
 
       axios({

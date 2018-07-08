@@ -1,7 +1,7 @@
 <template>
   <div v-if="true">
     <div trigger="custom" :visible="visible" @on-click="confirmSelect" class="search-main-content">
-      <Input v-model="value" placeholder="请输入想要搜索的用户名字" @on-keyup.enter="confirmSearch" @on-blur="hide_dropdown_list" @on-focus="show_dropdown_list">
+      <Input v-model="value" placeholder="请输入想要搜索的用户名字" @on-keyup.enter="confirmSearch" @on-blur="hide_dropdown_list" @on-focus="show_dropdown_list_and_get_follow">
         <Button @click="confirmSearch" slot="append" icon="ios-search"></Button>
       </Input>
       <!-- <DropdownMenu slot="list" class="search-menu">
@@ -13,10 +13,10 @@
     <div class="recommend" v-show="if_show_recommend">
       <Row v-for="(row, index_row) in recommendRows" :key="index_row" type="flex" justify="space-between" align="middle" class="code-row-bg" :gutter="16">
         <Col v-for="(col, index_col) in row" :key="(index_row - 1) * 3 + index_col - 1" class="item-img" span="10">
-          <p class="user-font">{{col.userName}}</p>
+          <p class="user-font">{{col.username}}</p>
           <div class="button-font">
-            <Button v-if="col.canFollow" class="follow" type="error" shape="circle" @click="follow(col.userId)">尚未关注，点击可关注</Button>
-            <Button v-else class="follow" type="primary" shape="circle" @click="unfollow(col.userId)">已关注，点击可取消关注</Button>
+            <Button v-if="col.canFollow" class="follow" type="error" shape="circle" @click="follow(col.userid)">尚未关注，点击可关注</Button>
+            <Button v-else class="follow" type="primary" shape="circle" @click="unfollow(col.userid)">已关注，点击可取消关注</Button>
           </div>
         </Col>
       </Row>
@@ -105,11 +105,11 @@
           url: '/service/getUserByUserName.do',
           method: 'get',
           params: {
-            userName: that.value
+            username: that.value
           }
         }).then(function (res) {
           if (res.data.length === 0) {
-            alert('该用户名不存在')
+            that.$Message.error('该用户名不存在')
           }
           var usersPerRow = []
           that.users = []
@@ -118,7 +118,7 @@
             var user = res.data[i]
             user.canFollow = true
             for (var j = 0; j < that.following.length; j++) {
-              if (that.following[j].username === user.userName) {
+              if (that.following[j].userid === user.userid) {
                 user.canFollow = false
                 break
               }
@@ -130,10 +130,10 @@
               usersPerRow = []
             }
           }
-          if (usersPerRow !== []) that.recommendRows.push(usersPerRow)
+          if (usersPerRow.length !== 0) that.recommendRows.push(usersPerRow)
         }).catch(function (err) {
           console.log(err)
-          console.log('搜索错误，请稍后重试')
+          that.$Message.error('搜索错误，请稍后重试')
         })
       },
       follow: function (targetid) {
@@ -147,17 +147,19 @@
           }
         }).then(function (res) {
           if (res.data === false) {
-            alert('关注失败')
+            that.$Message.error('关注失败')
           } else {
             for (var i = 0; i < that.users.length; i++) {
-              if (that.users[i].userId === targetid) {
+              if (that.users[i].userid === targetid) {
+                var user = that.users[i]
+                that.following.push(user)
                 that.users[i].canFollow = false
                 break
               }
             }
           }
         }).catch(function (err) {
-          alert(err)
+          console.log(err)
           that.$Message.error('发生错误，请稍后重试')
         })
       },
@@ -172,17 +174,24 @@
           }
         }).then(function (res) {
           if (res.data === false) {
-            alert('取消关注失败')
+            that.$Message.error('取消关注失败')
           } else {
             for (var i = 0; i < that.users.length; i++) {
-              if (that.users[i].userId === targetid) {
+              if (that.users[i].userid === targetid) {
                 that.users[i].canFollow = true
                 break
               }
             }
+            var newFollow = []
+            for (var j = 0; j < that.following.length; j++) {
+              if (that.following[j].userid !== targetid) {
+                newFollow.push(that.following[j])
+              }
+            }
+            that.following = newFollow
           }
         }).catch(function (err) {
-          alert(err)
+          console.log(err)
           that.$Message.error('发生错误，请稍后重试')
         })
       },
@@ -194,9 +203,26 @@
         this.visible = false
         this.if_show_recommend = true
       },
-      show_dropdown_list: function () {
+      show_dropdown_list_and_get_follow: function () {
+        var that = this
         this.visible = true
         this.if_show_recommend = false
+        axios({
+          url: '/service/getFollowings.do',
+          method: 'get',
+          params: {
+            userid: that.$store.state.userId
+          }
+        }).then(function (res) {
+          that.following = []
+          for (var i = 0; i < res.data.length; i++) {
+            res.data[i].canFollow = false
+            that.following.push(res.data[i])
+          }
+        }).catch(function (err) {
+          console.log('获取用户关注人列表失败')
+          that.$Message.error(err)
+        })
       }
     },
     created: function () {
@@ -210,22 +236,6 @@
         }, 3000)
       } else {
         this.isLogin = true
-        axios({
-          url: '/service/getFollowings.do',
-          method: 'get',
-          params: {
-            userid: that.$store.state.userId
-          }
-        }).then(function (res) {
-          console.log(res.data)
-          that.following = []
-          for (var i = 0; i < res.data.length; i++) {
-            that.following.push(res.data[i])
-          }
-        }).catch(function (err) {
-          console.log('获取用户关注人列表失败')
-          that.$Message.error(err)
-        })
       }
     },
     watch: {

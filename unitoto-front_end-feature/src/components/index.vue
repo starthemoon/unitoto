@@ -60,7 +60,7 @@ export default {
       method: 'get',
       url: '/service/getImageDownflashing.do',
       params: {
-        userId: this.$store.state.userId
+        userid: this.$store.state.userId
       }
     })
       .then(function (res) {
@@ -106,7 +106,7 @@ export default {
         return
       }
       var params = {
-        userId: this.$store.state.userId
+        userid: this.$store.state.userId
       }
       if (this.imgArr.length > 0) {
         params.photoId = this.imgArr[this.imgArr.length - 1].photoId
