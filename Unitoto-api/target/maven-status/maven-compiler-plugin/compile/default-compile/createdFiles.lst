@@ -1,9 +1,0 @@
-com/avenger/declare/api/sys/service/PhotoService.class
-com/avenger/declare/api/sys/entity/Comment.class
-com/avenger/declare/api/sys/entity/Multiphoto.class
-com/avenger/declare/api/sys/entity/Photo.class
-com/avenger/declare/api/sys/entity/Community.class
-com/avenger/declare/api/sys/service/UserService.class
-com/avenger/declare/api/sys/entity/User.class
-com/avenger/declare/api/sys/service/CommunityService.class
-com/avenger/declare/api/sys/entity/Label.class
