@@ -169,10 +169,12 @@ export default {
             .then(function (res) {
               if (res.data) {
                 that.$store.commit('setUser', that.loginData.loginUserid)
+                that.isLogin = false
+                that.$cookie.set('username', that.loginData.loginUserid, 30)
+                that.$cookie.set('password', that.loginData.loginPassword, 30)
+                that.$Message.success('登录成功')
                 that.loginData = {}
                 that.signupData = {}
-                that.isLogin = false
-                that.$Message.success('登录成功')
                 that.$router.push('/user')
               } else {
                 that.$Message.error('登录失败，请稍后重试')
@@ -224,6 +226,35 @@ export default {
       this.$nextTick(function () {
         this.$refs['menu'].currentActiveName = ''
       })
+    }
+  },
+  beforeCreate () {
+    var that = this
+    var userid = this.$cookie.get('username')
+    var userpassword = this.$cookie.get('password')
+    if (userid.length * userpassword.length !== 0) {
+      axios({
+        method: 'post',
+        url: '/service/login.do',
+        data: qs.stringify({
+          userid,
+          userpassword
+        }),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+        .then(function (res) {
+          if (res.data) {
+            that.$store.commit('setUser', userid)
+            that.isLogin = false
+            that.$Message.success('登录成功')
+          } else {
+            that.$Message.error('登录失败，请稍后重试')
+          }
+        })
+        .catch(function (err) {
+          console.log(err)
+          that.$Message.error('登录失败，请稍后重试')
+        })
     }
   }
 }
