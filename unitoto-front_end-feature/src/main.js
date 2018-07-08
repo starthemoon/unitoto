@@ -7,13 +7,13 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import vuex from './store'
 import VueMap from 'vue-amap'
-var VueCookie = require('vue-cookie');
+var VueCookie = require('vue-cookie')
 
 Vue.config.productionTip = false
 
 Vue.use(iView)
 Vue.use(VueMap)
-Vue.use(VueCookie);
+Vue.use(VueCookie)
 
 VueMap.initAMapApiLoader({
   key: '32d6e54108af91c1574e85a78dec060f',
