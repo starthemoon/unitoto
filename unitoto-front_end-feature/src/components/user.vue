@@ -185,7 +185,7 @@ export default {
           userid: that.$store.state.userId
         }
       }).then(function (res) {
-        var path = 'http://localhost:8080/Unitoto-web/'
+        var path = 'http://45.77.182.195:8080/Unitoto-web/'
         for (var i = 0; i < res.data.length; i++) {
           that.photos.push(path + res.data[i].photoaddress)
         }
