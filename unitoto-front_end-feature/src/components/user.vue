@@ -163,10 +163,6 @@ export default {
         clearInterval(c)
       }, 3000)
     } else {
-<<<<<<< HEAD
-      var path = 'http://localhost:8080/Unitoto-web/'
-=======
->>>>>>> 173711689b1f8caea739e25234f5848308a41bbf
       this.isLogin = true
 
       axios({
